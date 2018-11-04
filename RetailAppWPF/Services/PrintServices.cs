@@ -47,10 +47,12 @@ namespace RetailAppWPF.Services
             barcode.TextFont = font;
             BarcodeError barError = barcode.Validate();
 
-            var labelXmlFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\jbrooker-portrait.label");
+            var labelXmlFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\jbrooker-portrait-1.label");
             string xmlTemplate = File.ReadAllText(labelXmlFilePath, Encoding.UTF8);
             ILabel label = Label.OpenXml(xmlTemplate);
             label.SetObjectText("BARCODE", item.SKU);
+            label.SetObjectText("TEXT", item.Name);
+            label.SetObjectText("COST", item.Price);
 
             var printers = Framework.GetPrinters();
             if(printers!=null && printers.Count() >0)

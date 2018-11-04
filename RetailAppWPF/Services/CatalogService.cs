@@ -49,7 +49,8 @@ namespace RetailAppWPF.Services
                        Name = x.Field<string>("Item Name"),
                        Size = x.Field<string>("Variation Name"),
                        SKU = x.Field<string>("SKU"),
-                       Category = x.Field<string>("Category")
+                       Category = x.Field<string>("Category"),
+                       Price = x.Field<string>("Price")
                    }
                 );
 
