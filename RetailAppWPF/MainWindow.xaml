@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <Label Name="lblCategory" Content="Categories" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
         <Label Name="lblSelectedCategory" Content="" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" />
-        <ListView Name="listCategories" HorizontalAlignment="Left" MinHeight="500" Height="Auto" Margin="5,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="190"
+        <ListView Name="listCategories" HorizontalAlignment="Left" MinHeight="500" Height="500" Margin="5,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="190"
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
                   SelectionChanged="ListCategories_Selected"
@@ -30,7 +30,7 @@
             </ListView.View>
         </ListView>
 
-        <ListView Name="listProducts" HorizontalAlignment="Left" MinHeight="500" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="310" 
+        <ListView Name="listProducts" HorizontalAlignment="Left" Height="500" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="310" 
                 ItemsSource="{Binding Products, Mode=TwoWay}"
                 SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"  >
             <ListView.View>
