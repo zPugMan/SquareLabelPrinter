@@ -14,16 +14,21 @@ namespace RetailAppWPF.ViewModels
 
         }
 
+        private IEnumerable<string> categories;
         public IEnumerable<string> Categories
         {
             get
             {
-                List<string> categories = new List<string>();
+                List<String> categories = new List<string>();
                 categories.Add("Natural Tech");
                 categories.Add("Oi");
                 categories.Add("Essentials");
                 categories.Add("Alchemic");
                 return categories;
+            }
+            set
+            {
+                categories = value;
             }
         }
 
