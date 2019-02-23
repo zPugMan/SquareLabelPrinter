@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\MockModel.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Models\ProductItem.cs" />
     <Compile Include="Services\CatalogService.cs" />

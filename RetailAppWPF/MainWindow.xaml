@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RetailAppWPF"
+        xmlns:mock="clr-namespace:RetailAppWPF.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="650" Width="1000">
-    <Grid>
+    <Grid d:DataContext="{d:DesignInstance Type=mock:MockModel, IsDesignTimeCreatable=True}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition Width="320" />
