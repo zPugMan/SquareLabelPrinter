@@ -88,5 +88,11 @@ namespace RetailAppWPF.ViewModels
                 selectedProduct = value;
             }
         }
+
+        public string PrintQuantity
+        {
+            get { return "0"; }
+            set { PrintQuantity = value; }
+        }
     }
 }

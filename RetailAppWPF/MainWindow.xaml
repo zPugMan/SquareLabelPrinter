@@ -22,20 +22,22 @@
         <ListView Name="listCategories" HorizontalAlignment="Left" MinHeight="500" Height="500" Margin="5,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Width="190"
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
-                  SelectionChanged="ListCategories_Selected"
+                  SelectionChanged="ListCategories_Selected" FontSize="16"
+                  
                   >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn />
-                </GridView>
-            </ListView.View>
         </ListView>
 
         <ListView Name="listProducts" HorizontalAlignment="Left" Height="500" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" Width="310" 
                 ItemsSource="{Binding Products, Mode=TwoWay}"
-                SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"  >
+                SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"  
+                  FontSize="14">
+            <ListView.Resources>
+                <Style TargetType="GridViewColumnHeader">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </ListView.Resources>
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn DisplayMemberBinding="{Binding Name}" Width="180"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Size}" Width="100"/>
                 </GridView>
@@ -43,20 +45,84 @@
         </ListView>
 
         <StackPanel Name="printOption" Grid.Column="2" Grid.Row="1">
-            <Grid>
+            <Grid DataContext="{Binding SelectedProduct, Mode=TwoWay}">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="60" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="140" />
+                    <RowDefinition Height="40"  />
+                    <RowDefinition Height="40" />
                     <RowDefinition Height="40" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Label Name="lblPrintQuantity" Content="Quantity" Grid.Row="0" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"/>
-                <TextBox Name="txtPrintQuantity" Grid.Row="0" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Height="30" Width="50" 
+                <Grid   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="110" />
+                            <ColumnDefinition Width="80" />
+                        </Grid.ColumnDefinitions>
+                        <Label Name="lblPickCategory"
+                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" 
+                           Content="{Binding Category}" 
+                           FontSize="28"
+                           Foreground="DarkGray" VerticalAlignment="Bottom"/>
+                        <Label Name="lblPickName"
+                           Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3"
+                           Content="{Binding Name}" 
+                           FontSize="20" Margin="5,0,0,0"
+                           Foreground="DarkSlateGray"/>
+                        <Label Name="lblPickSKU"
+                           Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"
+                           Content="{Binding SKU}" 
+                           FontSize="14" Margin="5,0,0,0"
+                           Foreground="Gray"/>
+                        <Label Name="lblPickSize"
+                           Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+                           Content="{Binding Size}" 
+                           FontSize="14" Margin="25,0,10,0" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                           Foreground="Gray"/>
+                        <Label Name="lblPickPrice"
+                           Grid.Row="2" Grid.Column="3" 
+                           Content="{Binding Price}" 
+                           FontSize="14" Margin="5,0,10,0" HorizontalAlignment="Right"
+                           Foreground="Gray"/>
+                </Grid>
+                <Button Name="bttnAddQuantity"
+                        Grid.Row="1" Grid.Column="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
+                        MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
+                        FontSize="24"
+                        Content="+" />
+                <Label Name="lblPrintQuantity" Content="Quantity" 
+                       Grid.Row="2" Grid.Column="0" 
+                       VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"
+                       FontSize="16"/>
+                <TextBox Name="txtPrintQuantity" 
+                         Grid.Row="2" Grid.Column="1" 
+                         VerticalAlignment="Top" HorizontalAlignment="Center" Height="30" Width="60" 
                          Text="{Binding PrintQuantity, Mode=TwoWay}"
-                         InputScope="Number" Margin="5,5,0,0"/>
-                <Button Name="btnPrint" Grid.Row="1" Grid.Column="1" Content="Print" Height="30" Width="50" Margin="5,5,0,0" Click="btnPrint_Click"/>
+                         InputScope="Number" Margin="5,5,0,0"
+                         FontSize="16"/>
+                <Button Name="btnPrint" 
+                        Grid.Row="2" Grid.Column="2" 
+                        VerticalAlignment="Top" HorizontalAlignment="Left"
+                        Content="Print" Height="30" Width="70" Margin="25,5,0,0" 
+                        FontSize="16"
+                        Click="btnPrint_Click"/>
+                <Button Name="bttnSubtractQuantity"
+                        Grid.Row="3" Grid.Column="1"
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
+                        MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
+                        FontSize="24"
+                        Content="-" />
             </Grid>
         </StackPanel>
 
