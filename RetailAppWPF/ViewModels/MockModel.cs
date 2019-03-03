@@ -24,6 +24,7 @@ namespace RetailAppWPF.ViewModels
                 categories.Add("Oi");
                 categories.Add("Essentials");
                 categories.Add("Alchemic");
+                categories.Add("Styling");
                 return categories;
             }
             set
@@ -62,6 +63,13 @@ namespace RetailAppWPF.ViewModels
                 p.Price = "$53.02";
                 products.Add(p);
 
+                p = new ProductItem();
+                p.Category = "Styling";
+                p.Name = "EXTRA Strong Hold hair spray";
+                p.SKU = "MIESHHS400";
+                p.Size = "Regular";
+                p.Price = "$35.00";
+                products.Add(p);
                 return products;
             }
             set
@@ -76,11 +84,11 @@ namespace RetailAppWPF.ViewModels
             get
             {
                 ProductItem p = new ProductItem();
-                p.Category = "Natural Tech";
-                p.Name = "Calming Shampoo";
-                p.Size = "Regular 250ml";
-                p.SKU = "DLCURL250";
-                p.Price = "$53.02";
+                p.Category = "Styling";
+                p.Name = "EXTRA Strong Hold hair spray";
+                p.SKU = "MIESHHS400";
+                p.Size = "Regular";
+                p.Price = "$35.00";
                 return p;
             }
             set
