@@ -45,7 +45,7 @@
         </ListView>
 
         <StackPanel Name="printOption" Grid.Column="2" Grid.Row="1">
-            <Grid DataContext="{Binding SelectedProduct, Mode=TwoWay}">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="60" />
@@ -58,7 +58,9 @@
                     <RowDefinition Height="40" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Grid   Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <Grid
+                    DataContext="{Binding SelectedProduct, Mode=TwoWay}"
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="60" />
                             <RowDefinition Height="40" />
@@ -100,7 +102,8 @@
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
                         MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
                         FontSize="24"
-                        Content="+" />
+                        Content="+" 
+                        Click="bttnAddQuantity_Click"/>
                 <Label Name="lblPrintQuantity" Content="Quantity" 
                        Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"
@@ -109,6 +112,7 @@
                          Grid.Row="2" Grid.Column="1" 
                          VerticalAlignment="Top" HorizontalAlignment="Center" Height="30" Width="60" 
                          Text="{Binding PrintQuantity, Mode=TwoWay}"
+                         TextAlignment="Center"
                          InputScope="Number" Margin="5,5,0,0"
                          FontSize="16"/>
                 <Button Name="btnPrint" 
@@ -122,7 +126,8 @@
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
                         MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
                         FontSize="24"
-                        Content="-" />
+                        Content="-" 
+                        Click="bttnSubtractQuantity_Click"/>
             </Grid>
         </StackPanel>
 

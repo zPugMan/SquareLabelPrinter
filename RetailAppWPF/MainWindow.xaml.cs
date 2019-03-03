@@ -36,6 +36,7 @@ namespace RetailAppWPF
 
             catalog = new CatalogService();
             this.DataContext = this;
+            PrintQuantity = 1;
         }
 
         public IEnumerable<string> Categories
@@ -68,12 +69,24 @@ namespace RetailAppWPF
                 OnPropertyChanged("SelectedProduct");
             }
         }
-        public string PrintQuantity { get; set; }
+
+        private int printQuantity;
+        public int PrintQuantity
+        {
+            get { return printQuantity; }
+            set
+            {
+                printQuantity = value;
+                OnPropertyChanged("PrintQuantity");
+            }
+        }
+
         private int GetPrintQuantity()
         {
-            int result = 1;
-            int.TryParse(PrintQuantity, out result);
-            return result;
+            //int result = 1;
+            //int.TryParse(PrintQuantity.ToString(), out result);
+            //return result;
+            return 0;
         }
 
         private void btnPrint_Click(object sender, RoutedEventArgs e)
@@ -83,7 +96,8 @@ namespace RetailAppWPF
 
                 if (SelectedProduct != null)
                 {
-                    print.PrintBarcodeLabel2(SelectedProduct, GetPrintQuantity());
+                    //print.PrintBarcodeLabel2(SelectedProduct, GetPrintQuantity());
+                    print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
                 }
             }
             
@@ -105,6 +119,22 @@ namespace RetailAppWPF
             {
                 handler(this, new PropertyChangedEventArgs(name));
             }
+        }
+
+        private void bttnAddQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            //int qty;
+            //int.TryParse(PrintQuantity, out qty);
+            //PrintQuantity = String.Format("{0}", qty + 1);
+            PrintQuantity = PrintQuantity + 1;
+        }
+
+        private void bttnSubtractQuantity_Click(object sender, RoutedEventArgs e)
+        {
+            //int qty;
+            //int.TryParse(PrintQuantity, out qty);
+            //PrintQuantity = String.Format("{0}", qty - 1);
+            PrintQuantity = PrintQuantity - 1;
         }
     }
 }
