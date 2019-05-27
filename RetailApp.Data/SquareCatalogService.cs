@@ -32,13 +32,6 @@ namespace RetailApp.Data
             return response.Objects;
         }
 
-        public List<CatalogObject> CatalogItems(String categoryID)
-        {
-            SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
-            var response = catalogAPI.SearchCatalogObjects(request);
-            return response.Objects;
-        }
-
         public List<SquareProduct> GetCatelogItemsByCategory(string category)
         {
             SearchCatalogObjectsRequest req = new SearchCatalogObjectsRequest();
@@ -76,26 +69,21 @@ namespace RetailApp.Data
 
         }
 
-        public async Task<List<CatalogObject>> CatalogItemsAsync(String categoryID)
-        {
-            SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
-            var response = await catalogAPI.SearchCatalogObjectsAsync(request);
-            return response.Objects;
-        }
+        //public List<CatalogObject> CatalogItems(String categoryID)
+        //{
+        //    SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
+        //    var response = catalogAPI.SearchCatalogObjects(request);
+        //    return response.Objects;
+        //}
 
-        private SearchCatalogObjectsRequest GetCatalogByCategory(string categoryID)
-        {
-            SearchCatalogObjectsRequest request = new SearchCatalogObjectsRequest();
-            request.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
-            request.IncludeDeletedObjects = false;
-            request.IncludeRelatedObjects = true;
-            CatalogQuery searchQuery = new CatalogQuery();
-            searchQuery.ExactQuery = new CatalogQueryExact("category_id", categoryID);
-            request.Query = searchQuery;
-            return request;
-        }
+        //public async Task<List<CatalogObject>> CatalogItemsAsync(String categoryID)
+        //{
+        //    SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
+        //    var response = await catalogAPI.SearchCatalogObjectsAsync(request);
+        //    return response.Objects;
+        //}
 
-        //private SearchCatalogObjectsRequest GetCatalogByCategoryName(string categoryName)
+        //private SearchCatalogObjectsRequest GetCatalogByCategory(string categoryID)
         //{
         //    SearchCatalogObjectsRequest request = new SearchCatalogObjectsRequest();
         //    request.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
@@ -107,18 +95,18 @@ namespace RetailApp.Data
         //    return request;
         //}
 
-        public async Task<List<SquareCategory>> GetCategoriesAsync()
-        {
-            var response = await CatalogCategoriesAsync();
-            List<SquareCategory> result = new List<SquareCategory>();
+        //public async Task<List<SquareCategory>> GetCategoriesAsync()
+        //{
+        //    var response = await CatalogCategoriesAsync();
+        //    List<SquareCategory> result = new List<SquareCategory>();
 
-            foreach(CatalogObject o in response)
-            {
-                result.Add(SquareCategory.Load(o));
-            }
+        //    foreach(CatalogObject o in response)
+        //    {
+        //        result.Add(SquareCategory.Load(o));
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         public List<SquareCategory> GetCategories()
         {

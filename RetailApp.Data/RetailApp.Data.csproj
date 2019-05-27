@@ -63,9 +63,6 @@
     <Compile Include="SquareCatalogService.cs" />
     <Compile Include="ICatalogService.cs" />
     <Compile Include="InventoryService.cs" />
-    <Compile Include="Model\CatalogContext.cs" />
-    <Compile Include="Model\CatalogItem.cs" />
-    <Compile Include="Model\Category.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SquareCategory.cs" />
     <Compile Include="SquareProduct.cs" />
