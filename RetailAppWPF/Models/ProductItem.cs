@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RetailApp.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace RetailAppWPF.Models
         public string Size { get; set; }
         public string SKU { get; set; }
         public string Category { get; set; }
+        public string VariationId { get; set; }
         private string price;
         public string Price
         {
@@ -26,6 +28,24 @@ namespace RetailAppWPF.Models
                     return String.Format("${0}", price);
             }
             set { price = value; }
+        }
+
+        public static List<ProductItem> ToList(List<SquareProduct> p)
+        {
+            List<ProductItem> result = new List<ProductItem>();
+            foreach(SquareProduct prod in p)
+            {
+                ProductItem item = new ProductItem();
+                item.Name = prod.ItemName;
+                item.SKU = prod.SKU;
+                item.Size = prod.VariationName;
+                item.VariationId = prod.VariationId;
+                item.price = String.Format("{0:#.00}", Convert.ToDecimal(prod.Price) / 100);
+
+                if(!result.Exists(x=> x.SKU == item.SKU))
+                    result.Add(item);
+            }
+            return result;
         }
     }
 }
