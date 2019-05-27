@@ -9,7 +9,9 @@ namespace RetailAppWPF.Models
     public class ProductCategory
     {
         public string Name { get; set; }
+        public string Id { get; set; }
         public IEnumerable<ProductItem> Products { get; set; }
         public int ProductCount => Products.Count();
+
     }
 }

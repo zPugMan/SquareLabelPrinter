@@ -31,7 +31,7 @@
         <ListView Name="listCategories" HorizontalAlignment="Left" Margin="15,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" 
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
-                  SelectionChanged="ListCategories_Selected" FontSize="24"  Foreground="#FF444343"
+                  FontSize="24"  Foreground="#FF444343"
                   BorderThickness="0"
                   >
             <ListView.ItemContainerStyle>
@@ -135,7 +135,8 @@
                         MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
                         FontSize="24"
                         Content="+" 
-                        Click="bttnAddQuantity_Click"/>
+                        Command="{Binding AddPrintQuantityCommand}"
+                        />
                 <Label Name="lblPrintQuantity" Content="Quantity" 
                        Grid.Row="2" Grid.Column="0" 
                        VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,5,0,0"
@@ -152,14 +153,14 @@
                         VerticalAlignment="Top" HorizontalAlignment="Left"
                         Content="Print" Height="30" Width="70" Margin="25,5,0,0" 
                         FontSize="16"
-                        Click="btnPrint_Click"/>
+                        Command="{Binding PrintLabelCommand}"/>
                 <Button Name="bttnSubtractQuantity"
                         Grid.Row="3" Grid.Column="1"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
                         MinWidth="40" MinHeight="34" Background="White" BorderThickness="0"
                         FontSize="24"
                         Content="-" 
-                        Click="bttnSubtractQuantity_Click"/>
+                        Command="{Binding SubtractPrintQuantityCommand}"/>
             </Grid>
 
     </Grid>
