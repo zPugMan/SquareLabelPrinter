@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2046
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailAppWPF", "RetailAppWPF\RetailAppWPF.csproj", "{19F71110-D8D0-4D9A-98CB-2D8681A2363C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailApp.Data", "RetailApp.Data\RetailApp.Data.csproj", "{2B523B9B-0EA0-4F6D-88E7-C47EE6B46145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetailApp.Data.Tests", "RetailApp.Data.Tests\RetailApp.Data.Tests.csproj", "{942DD71D-AB20-41B4-B0C1-46DC04B68ED0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{19F71110-D8D0-4D9A-98CB-2D8681A2363C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F71110-D8D0-4D9A-98CB-2D8681A2363C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F71110-D8D0-4D9A-98CB-2D8681A2363C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B523B9B-0EA0-4F6D-88E7-C47EE6B46145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B523B9B-0EA0-4F6D-88E7-C47EE6B46145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B523B9B-0EA0-4F6D-88E7-C47EE6B46145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B523B9B-0EA0-4F6D-88E7-C47EE6B46145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{942DD71D-AB20-41B4-B0C1-46DC04B68ED0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942DD71D-AB20-41B4-B0C1-46DC04B68ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942DD71D-AB20-41B4-B0C1-46DC04B68ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942DD71D-AB20-41B4-B0C1-46DC04B68ED0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
