@@ -1,4 +1,5 @@
 ﻿using ExcelDataReader;
+using RetailApp.Data;
 using RetailAppWPF.Models;
 using System;
 using System.Collections.Generic;
@@ -17,26 +18,27 @@ namespace RetailAppWPF.Services
 
         public CatalogService()
         {
-            var excelFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\catalog-square.xlsx");
+            //var excelFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\catalog-square.xlsx");
 
-            using (var stream = File.Open(excelFilePath, FileMode.Open, FileAccess.Read))
-            {
-                using (var reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream))
-                {
-                    var conf = new ExcelDataSetConfiguration
-                    {
-                        ConfigureDataTable = _ => new ExcelDataTableConfiguration
-                        {
-                            UseHeaderRow = true
-                        }
-                    };
+            //using (var stream = File.Open(excelFilePath, FileMode.Open, FileAccess.Read))
+            //{
+            //    using (var reader = ExcelDataReader.ExcelReaderFactory.CreateReader(stream))
+            //    {
+            //        var conf = new ExcelDataSetConfiguration
+            //        {
+            //            ConfigureDataTable = _ => new ExcelDataTableConfiguration
+            //            {
+            //                UseHeaderRow = true
+            //            }
+            //        };
 
-                    var dataSet = reader.AsDataSet(conf);
-                    catalog = dataSet.Tables[0];
+            //        var dataSet = reader.AsDataSet(conf);
+            //        catalog = dataSet.Tables[0];
 
-                    LoadProducts();
-                }
-            }
+            //        LoadProducts();
+            //    }
+            //}
+            LoadCategories();
         }
 
         private void LoadProducts()
@@ -59,13 +61,29 @@ namespace RetailAppWPF.Services
 
         public IEnumerable<ProductItem> GetProducts(string category)
         {
-            return products.Where(x => x.Category == category);
+            //return products.Where(x => x.Category == category);
+            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService();
+            List<SquareProduct> products = svc.GetCatelogItemsByCategory(category);
+            return ProductItem.ToList(products);
         }
 
+        private List<SquareCategory> squareCategories;
         public IEnumerable<string> GetProductCategories()
         {
-            return products.Select(x => x.Category).Distinct();
-
+            //return products.Select(x => x.Category).Distinct();
+            return squareCategories.Select(x => x.CategoryName).Distinct();
         }
+
+        /// <summary>
+        /// Loads the product categories directly from Square
+        /// </summary>
+        /// <returns></returns>
+        public void LoadCategories()
+        {
+            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService();
+            List<SquareCategory> response = svc.GetCategories();
+            squareCategories = response;
+        }
+
     }
 }
