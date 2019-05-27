@@ -181,9 +181,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Assets\catalog-square.OLD">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Content Include="Assets\jbrooker-portrait.label">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

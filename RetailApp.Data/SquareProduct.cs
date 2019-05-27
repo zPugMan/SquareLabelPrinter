@@ -18,6 +18,11 @@ namespace RetailApp.Data
         public long? Price { get; set; }
         public string ItemName { get; set; }
 
+        /// <summary>
+        /// Helper. Converter
+        /// </summary>
+        /// <param name="catalogObject"></param>
+        /// <returns></returns>
         public static List<SquareProduct> LoadCatalogObject(CatalogObject catalogObject)
         {
             List<SquareProduct> products = new List<SquareProduct>();

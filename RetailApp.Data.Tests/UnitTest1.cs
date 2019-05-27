@@ -18,23 +18,23 @@ namespace RetailApp.Data.Tests
             CollectionAssert.AllItemsAreInstancesOfType(response, typeof(CatalogCategory), "Collection is not typeof Square.Connect.Model.CatalogCategory");
         }
 
-        [TestMethod]
-        public void TestCatalogItems()
-        {
-            SquareCatalogService svc = new SquareCatalogService();
-            List<CatalogObject> categories = svc.CatalogCategories();
-            CatalogObject category = categories.Find(x => x.CategoryData.Name == "Alchemic");
-            var response = svc.CatalogItems(category.Id);
-        }
+        //[TestMethod]
+        //public void TestCatalogItems()
+        //{
+        //    SquareCatalogService svc = new SquareCatalogService();
+        //    List<CatalogObject> categories = svc.CatalogCategories();
+        //    CatalogObject category = categories.Find(x => x.CategoryData.Name == "Alchemic");
+        //    var response = svc.CatalogItems(category.Id);
+        //}
 
-        [TestMethod]
-        public void TestCatalogItemsById()
-        {
-            SquareCatalogService svc = new SquareCatalogService();
-            List<CatalogObject> categories = svc.CatalogCategories();
-            CatalogObject cat = categories[0];
-            List<CatalogObject> items = svc.CatalogItems(cat.Id);
-        }
+        //[TestMethod]
+        //public void TestCatalogItemsById()
+        //{
+        //    SquareCatalogService svc = new SquareCatalogService();
+        //    List<CatalogObject> categories = svc.CatalogCategories();
+        //    CatalogObject cat = categories[0];
+        //    List<CatalogObject> items = svc.CatalogItems(cat.Id);
+        //}
 
         [TestMethod]
         public void TestCatalogItemsByName()
