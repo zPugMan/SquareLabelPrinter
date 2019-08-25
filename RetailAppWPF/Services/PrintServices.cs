@@ -16,6 +16,7 @@ namespace RetailAppWPF.Services
         private static string BARCODE_TXT = "{BARCODE}";
         private Dymo.DymoAddIn dymo;
 
+        //old method
         public void PrintBarcodeLabel(ProductItem item, int quantity)
         {
             var labelXmlFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\jbrooker.label");

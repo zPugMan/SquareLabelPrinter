@@ -125,7 +125,8 @@ namespace RetailAppWPF.ViewModels
         {
             using (PrintServices print = new PrintServices())
             {
-                print.PrintBarcodeLabel(SelectedProduct, PrintQuantity);
+                //print.PrintBarcodeLabel(SelectedProduct, PrintQuantity);
+                print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
             SelectedProduct = null;
         }

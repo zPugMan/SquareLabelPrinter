@@ -24,7 +24,7 @@ namespace RetailAppWPF.Services
         {
             RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService();
             List<SquareProduct> products = svc.GetCatelogItemsByCategory(category);
-            return ProductItem.ToList(products).OrderBy( p=>p.Name).OrderBy( p=>p.Price);
+            return ProductItem.ToList(products).OrderBy( p=>p.Price).OrderBy(p => p.Name);
         }
 
         private List<SquareCategory> squareCategories;
