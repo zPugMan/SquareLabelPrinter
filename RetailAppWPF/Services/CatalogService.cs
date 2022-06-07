@@ -1,5 +1,4 @@
-﻿using ExcelDataReader;
-using RetailApp.Data;
+﻿using RetailApp.Data;
 using RetailAppWPF.Models;
 using System;
 using System.Collections.Generic;
