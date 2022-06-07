@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace RetailAppWPF.ViewModels
 {
+    /// <summary>
+    /// View model for the catalog print label request
+    /// </summary>
     public class CatalogPrintViewModel : INotifyPropertyChanged
     {
         private static CatalogService catalog;
@@ -24,6 +27,9 @@ namespace RetailAppWPF.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
 
         private IEnumerable<String> categories;
+        /// <summary>
+        /// List of available product categories
+        /// </summary>
         public IEnumerable<string> Categories
         {
             get
@@ -38,6 +44,9 @@ namespace RetailAppWPF.ViewModels
         }
 
         private string selectedCategory;
+        /// <summary>
+        /// Current, selected product category
+        /// </summary>
         public string SelectedCategory
         {
             get
@@ -53,6 +62,9 @@ namespace RetailAppWPF.ViewModels
         }
 
         private IEnumerable<ProductItem> products;
+        /// <summary>
+        /// List of products within a product category as defined by <see cref="SelectedCategory"/>
+        /// </summary>
         public IEnumerable<ProductItem> Products
         {
             get
@@ -70,6 +82,9 @@ namespace RetailAppWPF.ViewModels
         }
 
         private ProductItem selectedProduct;
+        /// <summary>
+        /// Current, selected product
+        /// </summary>
         public ProductItem SelectedProduct
         {
             get
@@ -84,6 +99,9 @@ namespace RetailAppWPF.ViewModels
         }
 
         private int printQuantity;
+        /// <summary>
+        /// Set number of labels to print
+        /// </summary>
         public int PrintQuantity
         {
             get { return printQuantity; }
