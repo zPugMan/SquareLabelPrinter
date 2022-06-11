@@ -22,6 +22,7 @@ namespace RetailAppWPF.ViewModels
         {
             catalog = new CatalogService();
             Categories = catalog.GetProductCategories();
+            updateInventory = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -112,6 +113,32 @@ namespace RetailAppWPF.ViewModels
             }
         }
 
+        private string updateInventoryResult;
+        public string UpdateInventoryResult
+        {
+            get { return updateInventoryResult; }
+            set
+            {
+                if (!updateInventoryResult.Equals(value))
+                {
+                    updateInventoryResult = value;
+                    OnPropertyChanged(nameof(UpdateInventoryResult));
+                }
+            }
+        }
+
+
+        private bool updateInventory;
+        public bool UpdateInventoryCheck
+        {
+            get { return updateInventory; }
+            set
+            {
+                updateInventory = value;
+                OnPropertyChanged(nameof(UpdateInventoryCheck));
+            }
+        }
+
         private Helper.RelayCommand printLabelCommand;
         public ICommand PrintLabelCommand
         {
@@ -143,8 +170,8 @@ namespace RetailAppWPF.ViewModels
         {
             using (PrintServices print = new PrintServices())
             {
-                //print.PrintBarcodeLabel(SelectedProduct, PrintQuantity);
-                print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
+                UpdateInventoryCheck = true;
+                //print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
             SelectedProduct = null;
         }
@@ -187,6 +214,35 @@ namespace RetailAppWPF.ViewModels
             }
         }
 
+        private Helper.RelayCommand updateInventoryCommand;
+        public ICommand UpdateInventoryCommand
+        {
+            get
+            {
+                updateInventoryCommand = new Helper.RelayCommand(
+                    p => this.printQuantity > 0,
+                    p => this.ExecuteInventoryUpdate());
+                return updateInventoryCommand;
+            }
+        }
+
+        private Helper.RelayCommand cancelUpdateInventoryCommand;
+        public ICommand CancelUpdateInventoryCommand
+        {
+            get
+            {
+                cancelUpdateInventoryCommand = new Helper.RelayCommand(
+                    p => true,
+                    p => this.Reset());
+                return cancelUpdateInventoryCommand;
+            }
+        }
+
+        private void ExecuteInventoryUpdate()
+        {
+            UpdateInventoryResult = string.Empty;
+        }
+
         public void AddPrintQuantity()
         {
             PrintQuantity++;
@@ -210,6 +266,12 @@ namespace RetailAppWPF.ViewModels
                 else
                     return false;
             }
+        }
+
+        public void Reset()
+        {
+            UpdateInventoryCheck = false;
+            PrintQuantity = 0;
         }
 
         protected void OnPropertyChanged(string name)
