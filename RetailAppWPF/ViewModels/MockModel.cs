@@ -103,5 +103,15 @@ namespace RetailAppWPF.ViewModels
             get { return "1"; }
             set { printQuantity = value; }
         }
+
+        private bool updateInventory;
+        public bool UpdateInventory
+        {
+            get { return updateInventory; }
+            set
+            {
+                updateInventory = value;
+            }
+        }
     }
 }
