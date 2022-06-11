@@ -24,10 +24,8 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <!--
-        <Label Name="lblCategory" Content="Categories" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0"/>
-        <Label Name="lblSelectedCategory" Content="" HorizontalAlignment="Left" Margin="5,5,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0" />
-        -->
+        
+        <!-- Available product categories -->
         <ListView Name="listCategories" HorizontalAlignment="Left" Margin="15,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" 
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
@@ -42,6 +40,7 @@
             </ListView.ItemContainerStyle>
         </ListView>
 
+        <!-- Available products within category -->
         <ListView Name="listProducts" HorizontalAlignment="Stretch" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" 
                   BorderThickness="0"
                 ItemsSource="{Binding Products, Mode=TwoWay}"
@@ -70,13 +69,10 @@
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
-            
         </ListView>
 
-            <Grid Name="printOption"  
-                  Grid.Column="2" Grid.Row="1"
-                  Margin="20,0,0,0"
-                >
+        <StackPanel Grid.Column="2" Grid.Row="1" Margin="20,0,0,0" >
+            <Grid x:Name="printOption">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="150" />
                     <ColumnDefinition Width="60" />
@@ -89,7 +85,7 @@
                     <RowDefinition Height="40" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid
+                <Grid x:Name="selectedProductToPrint"
                     DataContext="{Binding SelectedProduct, Mode=TwoWay}"
                     Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
                         <Grid.RowDefinitions>
@@ -128,6 +124,7 @@
                            Content="{Binding Price}" 
                            FontSize="14" Margin="5,0,10,0" HorizontalAlignment="Right"
                            Foreground="Gray"/>
+                    
                 </Grid>
                 <Button Name="bttnAddQuantity"
                         Grid.Row="1" Grid.Column="1"
@@ -153,7 +150,8 @@
                         VerticalAlignment="Top" HorizontalAlignment="Left"
                         Content="Print" Height="30" Width="70" Margin="25,5,0,0" 
                         FontSize="16"
-                        Command="{Binding PrintLabelCommand}"/>
+                        Command="{Binding PrintLabelCommand}">
+                </Button>
                 <Button Name="bttnSubtractQuantity"
                         Grid.Row="3" Grid.Column="1"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
@@ -162,6 +160,67 @@
                         Content="-" 
                         Command="{Binding SubtractPrintQuantityCommand}"/>
             </Grid>
+            
+        </StackPanel>
+        <!---->
+        <Popup x:Name="updateInventoryPopup" IsOpen="{Binding UpdateInventoryCheck, Mode=TwoWay}"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Width="800" Height="800"
+               Grid.ColumnSpan="3"
+               Grid.RowSpan="2"
+               Grid.Column="0"
+               Grid.Row="0"
+               Placement="Center"
+               AllowsTransparency="True"
+               PopupAnimation="Slide"
+               >
+            <!---->
+            <Border BorderThickness="2" Background="Black">
+                <StackPanel Background="LightGray">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="190" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="150"/>
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="100" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Name="txtInventoryUpdateMessage" 
+                                Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="1"
+                                Text="Update Inventory??" VerticalAlignment="Stretch" HorizontalAlignment="Center" FontSize="16" />
+                        <Button Name="btnNoUpdateInventory" 
+                                Grid.Row="2" Grid.Column="1"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
+                                MinWidth="90" MinHeight="34"  BorderThickness="1"
+                                FontSize="24"
+                                Content="No" 
+                                Command="{Binding CancelUpdateInventoryCommand}"/>
+                        <Button Name="btnUpdateInventory"
+                                Grid.Row="2" Grid.Column="2"
+                                VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"
+                                MinWidth="90" MinHeight="34" BorderThickness="1"
+                                FontSize="24"
+                                Content="Yes" 
+                                Command="{Binding UpdateInventoryCommand}" />
+                        <TextBlock Name="txtUpdateStatus" FontSize="14" Grid.Row="3" Grid.ColumnSpan="4" Margin="10,10,10,10"
+                                TextWrapping="Wrap"
+                                Text="{Binding UpdateInventoryResult, Mode=TwoWay}" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </Popup>    
+        <!--<TextBlock VerticalAlignment="Center">
+            <Run Text="Binding value:" />
+            <Run Text="{Binding UpdateInventory, Mode=TwoWay}" />
 
+        </TextBlock>-->
+
+        
     </Grid>
 </Window>
