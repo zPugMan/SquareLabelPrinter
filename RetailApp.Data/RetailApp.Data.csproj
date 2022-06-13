@@ -60,6 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiError.cs" />
+    <Compile Include="ApiResponse.cs" />
     <Compile Include="SquareCatalogService.cs" />
     <Compile Include="ICatalogService.cs" />
     <Compile Include="InventoryService.cs" />
