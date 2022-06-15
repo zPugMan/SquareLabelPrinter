@@ -120,36 +120,14 @@ namespace RetailApp.Data.Tests
             Assert.IsTrue(result.Errors != null && result.Errors.Count > 0, "Expecting at least one error in response");
         }
 
+        //TODO add test attributes to filter integration from unit tests
+        //[TestMethod]
+        //public void IntegrationTestAddInventory()
         //{
-        //    SquareCatalogService svc = new SquareCatalogService();
-        //    List<CatalogObject> categories = svc.CatalogCategories();
+        //    var svc = new InventoryService();
+        //    var result = svc.AddInventory("WIBPW6H6YQRKAWAOAJVTAANO", 3);
 
-        //    CatalogObject co = categories.Find(x => x.CategoryData.Name == "Other");
-
-        //    List<CatalogObject> items = svc.CatalogItems(co.Id);
-        //    CatalogObject item = items.Find(x => x.ItemData.Name == "Test Beauty");
-
-        //    InventoryService iSvc = new InventoryService();
-        //    InventoryChange change = new InventoryChange();
-        //    change.Type = InventoryChange.TypeEnum.ADJUSTMENT;
-        //    InventoryAdjustment adjustment = new InventoryAdjustment();
-        //    adjustment.CatalogObjectId = item.ItemData.Variations[0].Id;
-        //    adjustment.Quantity = "2";
-
-        //    LocationsApi locoAPI = new LocationsApi();
-        //    var respLoco = locoAPI.ListLocations();
-
-        //    adjustment.LocationId = respLoco.Locations[0].Id;
-        //    adjustment.FromState = InventoryAdjustment.FromStateEnum.NONE;
-        //    adjustment.ToState = InventoryAdjustment.ToStateEnum.INSTOCK;
-        //    adjustment.OccurredAt = DateTime.UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ssZ");
-
-        //    change.Adjustment = adjustment;
-
-
-        //    iSvc.AddInventory(Guid.NewGuid(), change);
+        //    Assert.IsTrue(result.IsSuccess, "Expecting success on integratino test adding inventory");
         //}
-
-
     }
 }
