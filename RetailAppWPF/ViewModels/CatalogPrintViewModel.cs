@@ -113,7 +113,7 @@ namespace RetailAppWPF.ViewModels
             }
         }
 
-        private string updateInventoryResult;
+        private string updateInventoryResult = "";
         public string UpdateInventoryResult
         {
             get { return updateInventoryResult; }
@@ -134,6 +134,11 @@ namespace RetailAppWPF.ViewModels
             get { return updateInventory; }
             set
             {
+                if (updateInventory != value) { }
+                    Thread.Sleep(150);
+                if (value)
+                    UpdateInventoryResult = string.Empty;
+
                 updateInventory = value;
                 OnPropertyChanged(nameof(UpdateInventoryCheck));
             }
@@ -173,7 +178,7 @@ namespace RetailAppWPF.ViewModels
                 UpdateInventoryCheck = true;
                 //print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
-            SelectedProduct = null;
+            //SelectedProduct = null;
         }
 
         private Helper.RelayCommand addPrintQuantityCommand;
@@ -240,7 +245,16 @@ namespace RetailAppWPF.ViewModels
 
         private void ExecuteInventoryUpdate()
         {
-            UpdateInventoryResult = string.Empty;
+            if (SelectedProduct == null)
+                return;
+
+            if (PrintQuantity < 1)
+                return;
+
+            var svc = new InventoryManagerService();
+            var result = svc.AddInventory(SelectedProduct, PrintQuantity);
+            UpdateInventoryResult = result.Message;
+            UpdateInventoryCheck = !result.IsSuccess;
         }
 
         public void AddPrintQuantity()
