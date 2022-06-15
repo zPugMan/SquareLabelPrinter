@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 using Square.Connect.Client;
 using Square.Connect.Api;
 using Square.Connect.Model;
+using System.Configuration;
 
 namespace RetailApp.Data
 {
     public class SquareCatalogService : ICatalogService
     {
         private CatalogApi catalogAPI;
+        private readonly string Location = ConfigurationManager.AppSettings.Get("squareLocation");
+        private readonly string BaseURL = ConfigurationManager.AppSettings.Get("squareClientUrl");
+        private readonly string AccessToken = ConfigurationManager.AppSettings.Get("squareAccessToken");
 
         public SquareCatalogService()
         {
-            Configuration.Default.AccessToken = "***REMOVED***";
-            catalogAPI = new CatalogApi();
+            var config = new Square.Connect.Client.Configuration(new ApiClient(basePath: BaseURL));
+            config.AccessToken = AccessToken;
+            catalogAPI = new CatalogApi(config);
         }
 
         public async Task<List<CatalogObject>> CatalogCategoriesAsync()
