@@ -18,6 +18,9 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.ComponentModel;
 using RetailAppWPF.ViewModels;
+using ToastNotifications;
+using ToastNotifications.Lifetime;
+using ToastNotifications.Position;
 
 namespace RetailAppWPF
 {
@@ -31,7 +34,25 @@ namespace RetailAppWPF
         {
             InitializeComponent();
 
-            this.DataContext = new CatalogPrintViewModel();
+            using (Notifier notify = new Notifier(cfg =>
+             {
+                 cfg.PositionProvider = new WindowPositionProvider(
+                     parentWindow: Application.Current.MainWindow,
+                     corner: Corner.TopRight,
+                     offsetX: 10,
+                     offsetY: 10);
+
+                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                     notificationLifetime: TimeSpan.FromSeconds(3),
+                     maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+
+                 cfg.Dispatcher = Application.Current.Dispatcher;
+             }
+            ))
+            {
+                this.DataContext = new CatalogPrintViewModel();
+            }
+                
         }
 
 
