@@ -143,6 +143,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\RelayCommand.cs" />
+    <Compile Include="Services\InventoryManagerService.cs" />
     <Compile Include="ViewModels\CatalogPrintViewModel.cs" />
     <Compile Include="ViewModels\MockModel.cs" />
     <Compile Include="Models\ProductCategory.cs" />
