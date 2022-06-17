@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ToastNotifications;
 
 namespace RetailAppWPF.ViewModels
 {
     public class CatalogPrintViewModel : INotifyPropertyChanged
     {
         private static CatalogService catalog;
+        private Notifier NotifyToast;
 
-        public CatalogPrintViewModel()
+        public CatalogPrintViewModel(Notifier notify)
         {
+            NotifyToast = notify;
             catalog = new CatalogService();
             Categories = catalog.GetProductCategories();
         }
