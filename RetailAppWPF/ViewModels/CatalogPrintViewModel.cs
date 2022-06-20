@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ToastNotifications;
+using ToastNotifications.Messages;
 
 namespace RetailAppWPF.ViewModels
 {
@@ -116,21 +117,6 @@ namespace RetailAppWPF.ViewModels
             }
         }
 
-        private string updateInventoryResult = "";
-        public string UpdateInventoryResult
-        {
-            get { return updateInventoryResult; }
-            set
-            {
-                if (!updateInventoryResult.Equals(value))
-                {
-                    updateInventoryResult = value;
-                    OnPropertyChanged(nameof(UpdateInventoryResult));
-                }
-            }
-        }
-
-
         private bool updateInventory;
         public bool UpdateInventoryCheck
         {
@@ -139,8 +125,6 @@ namespace RetailAppWPF.ViewModels
             {
                 if (updateInventory != value) { }
                     Thread.Sleep(150);
-                if (value)
-                    UpdateInventoryResult = string.Empty;
 
                 updateInventory = value;
                 OnPropertyChanged(nameof(UpdateInventoryCheck));
@@ -256,7 +240,11 @@ namespace RetailAppWPF.ViewModels
 
             var svc = new InventoryManagerService();
             var result = svc.AddInventory(SelectedProduct, PrintQuantity);
-            UpdateInventoryResult = result.Message;
+            if (result.IsSuccess)
+                NotifyToast.ShowSuccess(result.Message);
+            else
+                NotifyToast.ShowWarning(result.Message);
+
             UpdateInventoryCheck = !result.IsSuccess;
         }
 

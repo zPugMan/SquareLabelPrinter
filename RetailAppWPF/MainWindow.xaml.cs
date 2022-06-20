@@ -35,22 +35,23 @@ namespace RetailAppWPF
             InitializeComponent();
 
             using (Notifier notify = new Notifier(cfg =>
-             {
-                 cfg.PositionProvider = new WindowPositionProvider(
-                     parentWindow: Application.Current.MainWindow,
-                     corner: Corner.TopRight,
-                     offsetX: 10,
-                     offsetY: 10);
+                {
+                    cfg.PositionProvider = new WindowPositionProvider(
+                        parentWindow: Application.Current.MainWindow,
+                        corner: Corner.BottomRight,
+                        offsetX: 10,
+                        offsetY: 10);
 
-                 cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
-                     notificationLifetime: TimeSpan.FromSeconds(3),
-                     maximumNotificationCount: MaximumNotificationCount.FromCount(5));
+                    cfg.LifetimeSupervisor = new TimeAndCountBasedLifetimeSupervisor(
+                        notificationLifetime: TimeSpan.FromSeconds(3),
+                        maximumNotificationCount: MaximumNotificationCount.FromCount(5));
 
-                 cfg.Dispatcher = Application.Current.Dispatcher;
-             }
-            ))
+                    cfg.Dispatcher = Application.Current.Dispatcher;
+
+
+                }))
             {
-                this.DataContext = new CatalogPrintViewModel();
+                this.DataContext = new CatalogPrintViewModel(notify);
             }
                 
         }
