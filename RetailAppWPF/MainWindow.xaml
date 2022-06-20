@@ -208,9 +208,6 @@
                                 FontSize="24"
                                 Content="Yes" 
                                 Command="{Binding UpdateInventoryCommand}" />
-                        <TextBlock Name="txtUpdateStatus" FontSize="14" Grid.Row="3" Grid.ColumnSpan="4" Margin="10,10,10,10"
-                                TextWrapping="Wrap"
-                                Text="{Binding UpdateInventoryResult, Mode=TwoWay}" />
                     </Grid>
                 </StackPanel>
             </Border>
