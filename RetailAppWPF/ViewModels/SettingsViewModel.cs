@@ -13,12 +13,14 @@ namespace RetailAppWPF.ViewModels
     public class SettingsViewModel : ViewModelBase
     {
 
-        public ICommand NavigateCatalogPrintCommand { get; }
+        public ICommand SettingSaveCommand { get; }
+        public ICommand SettingCancelCommand { get; }
 
         public SettingsViewModel(NavigationStore navStore, Notifier notify)
         {
             NotifyToast = notify;
-            NavigateCatalogPrintCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
+            SettingSaveCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
+            SettingCancelCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
         }
     }
 }

@@ -28,7 +28,7 @@
         <ComboBox Grid.Row="3" Grid.Column="1" Width="175" Height="30" />
         <Label Grid.Row="4" Grid.Column="0" Content="Enable Printing" VerticalAlignment="Center" Margin="40,0" />
         <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Button Grid.Row="6" Grid.Column="0" Width="100" Height="30" Content="Cancel"/>
-        <Button Grid.Row="6" Grid.Column="1" Width="100" Height="30" Content="Save"/>
+        <Button Grid.Row="6" Grid.Column="0" Width="100" Height="30" Content="Cancel" Command="{Binding SettingSaveCommand}"/>
+        <Button Grid.Row="6" Grid.Column="1" Width="100" Height="30" Content="Save" Command="{Binding SettingCancelCommand}"/>
     </Grid>
 </UserControl>
