@@ -12,28 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using RetailAppWPF.Services;
-using RetailAppWPF.Models;
-using System.Collections.ObjectModel;
-using System.Reactive.Linq;
-using System.ComponentModel;
-using RetailAppWPF.ViewModels;
 
-
-namespace RetailAppWPF
+namespace RetailAppWPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SettingsView : UserControl
     {
-
-        public MainWindow()
+        public SettingsView()
         {
             InitializeComponent();
-                
         }
-
-
     }
 }
