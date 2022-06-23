@@ -10,7 +10,7 @@
         WindowState="Maximized"
         MinWidth="1024"
         Width="1680">
-    <ContentControl Content="{Binding CurrentViewModel}">
+    <ContentControl Content="{Binding CurrentViewModel}" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,30">
         <ContentControl.Resources>
             <DataTemplate DataType="{x:Type viewModels:CatalogPrintViewModel}">
                 <views:CatalogPrintView />
