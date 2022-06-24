@@ -181,7 +181,7 @@
                >
             <!---->
         <Border BorderThickness="2" Background="Black">
-            <StackPanel Background="LightGray">
+            <StackPanel Background="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

@@ -120,6 +120,9 @@ namespace RetailAppWPF.ViewModels
         }
 
         private bool updateInventory;
+        /// <summary>
+        /// Popup control for prompt when true
+        /// </summary>
         public bool UpdateInventoryCheck
         {
             get { return updateInventory; }
@@ -162,19 +165,17 @@ namespace RetailAppWPF.ViewModels
 
         public void PrintLabel()
         {
-            if (!Properties.Settings.Default.PrintEnable)
+            if (!SettingsStore.PrintEnable)
             {
                 UpdateInventoryCheck = true;
                 return;
             }
-                
 
             using (PrintServices print = new PrintServices())
             {
                 UpdateInventoryCheck = true;
                 print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
-            //SelectedProduct = null;
         }
 
         private Helper.RelayCommand addPrintQuantityCommand;

@@ -38,8 +38,11 @@ namespace RetailAppWPF
 
 
             });
-            
-            navigationStore.CurrentViewModel = new CatalogPrintViewModel(navigationStore, notify);
+
+            if (string.IsNullOrEmpty(RetailAppWPF.Properties.Settings.Default.AccessToken))
+                navigationStore.CurrentViewModel = new SettingsViewModel(navigationStore, notify);
+            else
+                navigationStore.CurrentViewModel = new CatalogPrintViewModel(navigationStore, notify);
 
             MainWindow = new MainWindow()
             {

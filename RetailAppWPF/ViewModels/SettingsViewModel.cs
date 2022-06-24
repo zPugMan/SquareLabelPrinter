@@ -19,13 +19,12 @@ namespace RetailAppWPF.ViewModels
         {
             NotifyToast = notify;
             navigationStore = navStore;
-            //SettingSaveCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
             SettingCancelCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
 
-            SelectedEnvironment = Properties.Settings.Default.Environment;
-            AccessToken = Properties.Settings.Default.AccessToken;
-            SelectedLocation = Properties.Settings.Default.Location;
-            PrintEnabled = Properties.Settings.Default.PrintEnable;
+            SelectedEnvironment = SettingsStore.Environment;
+            AccessToken = SettingsStore.AccessToken;
+            SelectedLocation = SettingsStore.Location;
+            PrintEnabled = SettingsStore.PrintEnable;
         }
 
         public readonly ObservableCollection<string> AvailableEnvironments = new ObservableCollection<string>() { "Production", "Sandbox" };
@@ -93,6 +92,5 @@ namespace RetailAppWPF.ViewModels
         }
 
         public ICommand SettingCancelCommand { get; }
-        //public ICommand SettingSaveCommand { get; }
     }
 }

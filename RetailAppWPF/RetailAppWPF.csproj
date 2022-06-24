@@ -16,7 +16,7 @@
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <PublishUrl>c:\temp\RetailApp\</PublishUrl>
+    <PublishUrl>E:\RetailApp\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
@@ -26,7 +26,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -147,6 +147,7 @@
     <Compile Include="Helper\RelayCommand.cs" />
     <Compile Include="Services\InventoryManagerService.cs" />
     <Compile Include="Stores\NavigationStore.cs" />
+    <Compile Include="Stores\SettingsStore.cs" />
     <Compile Include="ViewModels\CatalogPrintViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MockModel.cs" />
