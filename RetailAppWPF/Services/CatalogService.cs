@@ -21,7 +21,11 @@ namespace RetailAppWPF.Services
 
         public IEnumerable<ProductItem> GetProducts(string category)
         {
-            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService();
+            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService(
+                location: Properties.Settings.Default.Location,
+                accessToken: Properties.Settings.Default.AccessToken,
+                environment: Properties.Settings.Default.Environment
+                );
             List<SquareProduct> products = svc.GetCatelogItemsByCategory(category);
             return ProductItem.ToList(products).OrderBy( p=>p.Price).OrderBy(p => p.Name);
         }
@@ -38,7 +42,11 @@ namespace RetailAppWPF.Services
         /// <returns></returns>
         public void LoadCategories()
         {
-            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService();
+            RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService(
+                location: Properties.Settings.Default.Location,
+                accessToken: Properties.Settings.Default.AccessToken,
+                environment: Properties.Settings.Default.Environment
+                );
             List<SquareCategory> response = svc.GetCategories();
             squareCategories = response;
         }
