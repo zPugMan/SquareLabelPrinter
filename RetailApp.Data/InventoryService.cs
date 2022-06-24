@@ -20,7 +20,25 @@ namespace RetailApp.Data
 
         public InventoryService()
         {
-            //Configuration.Default.AccessToken = "EAAAEOuEbej1xTRYe87QtBrxFosUNbeyF3Cn15PcNFFCltL-6_LbT-0mr2AL7zha";  //TODO refactor this "sq0atp-1HHSi3YYpmrFm59ANOiiPw";
+            Init();
+        }
+
+        public InventoryService(string location, string accessToken, string environment)
+        {
+            Location = location;
+            AccessToken = accessToken;
+            if (environment.Equals("Sandbox", StringComparison.CurrentCulture))
+                BaseURL = "https://connect.squareupsandbox.com";
+            else if (environment.Equals("Production", StringComparison.CurrentCulture))
+                BaseURL = "https://connect.squareup.com";
+            else
+                throw new Exception("Invalid environment: " + environment);
+
+            Init();
+        }
+
+        private void Init()
+        {
             var config = new Square.Connect.Client.Configuration(new ApiClient(basePath: BaseURL));
             config.AccessToken = AccessToken;
             inventoryAPI = new InventoryApi(config);
