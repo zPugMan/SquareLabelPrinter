@@ -1,5 +1,6 @@
 ﻿using RetailApp.Data;
 using RetailAppWPF.Models;
+using RetailAppWPF.Stores;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,15 +17,16 @@ namespace RetailAppWPF.Services
 
         public CatalogService()
         {
-            LoadCategories();
+            if(SettingsStore.IsReady())
+                LoadCategories();
         }
 
         public IEnumerable<ProductItem> GetProducts(string category)
         {
             RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService(
-                location: Properties.Settings.Default.Location,
-                accessToken: Properties.Settings.Default.AccessToken,
-                environment: Properties.Settings.Default.Environment
+                location: SettingsStore.Location,
+                accessToken: SettingsStore.AccessToken,
+                environment: SettingsStore.Environment
                 );
             List<SquareProduct> products = svc.GetCatelogItemsByCategory(category);
             return ProductItem.ToList(products).OrderBy( p=>p.Price).OrderBy(p => p.Name);
@@ -43,9 +45,9 @@ namespace RetailAppWPF.Services
         public void LoadCategories()
         {
             RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService(
-                location: Properties.Settings.Default.Location,
-                accessToken: Properties.Settings.Default.AccessToken,
-                environment: Properties.Settings.Default.Environment
+                location: SettingsStore.Location,
+                accessToken: SettingsStore.AccessToken,
+                environment: SettingsStore.Environment
                 );
             List<SquareCategory> response = svc.GetCategories();
             squareCategories = response;
