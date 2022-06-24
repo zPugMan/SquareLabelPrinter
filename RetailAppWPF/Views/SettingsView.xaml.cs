@@ -24,5 +24,6 @@ namespace RetailAppWPF.Views
         {
             InitializeComponent();
         }
+
     }
 }
