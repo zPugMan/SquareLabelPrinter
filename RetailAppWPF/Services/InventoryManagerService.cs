@@ -14,7 +14,11 @@ namespace RetailAppWPF.Services
 
         public (bool IsSuccess, string Message) AddInventory(ProductItem product, int addQuantity)
         {
-            var svc = new InventoryService();
+            var svc = new InventoryService(
+                location: Properties.Settings.Default.Location,
+                accessToken: Properties.Settings.Default.AccessToken,
+                environment: Properties.Settings.Default.Environment
+                );
             var result = svc.AddInventory(product.VariationId, addQuantity);
 
             return ParseApiResponse(result);

@@ -162,10 +162,17 @@ namespace RetailAppWPF.ViewModels
 
         public void PrintLabel()
         {
+            if (!Properties.Settings.Default.PrintEnable)
+            {
+                UpdateInventoryCheck = true;
+                return;
+            }
+                
+
             using (PrintServices print = new PrintServices())
             {
                 UpdateInventoryCheck = true;
-                //print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
+                print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
             //SelectedProduct = null;
         }
