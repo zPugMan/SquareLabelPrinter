@@ -1,5 +1,7 @@
-﻿using RetailAppWPF.Models;
+﻿using RetailAppWPF.Commands;
+using RetailAppWPF.Models;
 using RetailAppWPF.Services;
+using RetailAppWPF.Stores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,20 +18,20 @@ namespace RetailAppWPF.ViewModels
     /// <summary>
     /// View model for the catalog print label request
     /// </summary>
-    public class CatalogPrintViewModel : INotifyPropertyChanged
+    public class CatalogPrintViewModel : ViewModelBase
     {
         private static CatalogService catalog;
-        private Notifier NotifyToast;
-
-        public CatalogPrintViewModel(Notifier notify)
+        
+        public CatalogPrintViewModel(NavigationStore navStore, Notifier notify)
         {
             NotifyToast = notify;
             catalog = new CatalogService();
             Categories = catalog.GetProductCategories();
             updateInventory = false;
+            NavigateSettingsCommand = new NavigateCommand<SettingsViewModel>(navStore, ()=> new SettingsViewModel(navStore, notify));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand NavigateSettingsCommand { get; }
 
         private IEnumerable<String> categories;
         /// <summary>
@@ -136,7 +138,7 @@ namespace RetailAppWPF.ViewModels
         {
             get
             {
-                if(printLabelCommand == null)
+                if (printLabelCommand == null)
                 {
                     printLabelCommand = new Helper.RelayCommand(
                         p => this.CanPrint,
@@ -160,10 +162,17 @@ namespace RetailAppWPF.ViewModels
 
         public void PrintLabel()
         {
+            if (!Properties.Settings.Default.PrintEnable)
+            {
+                UpdateInventoryCheck = true;
+                return;
+            }
+                
+
             using (PrintServices print = new PrintServices())
             {
                 UpdateInventoryCheck = true;
-                //print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
+                print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);
             }
             //SelectedProduct = null;
         }
@@ -176,7 +185,7 @@ namespace RetailAppWPF.ViewModels
         {
             get
             {
-                if(addPrintQuantityCommand == null)
+                if (addPrintQuantityCommand == null)
                 {
                     addPrintQuantityCommand = new Helper.RelayCommand(
                         p => this.CanPlusMinus,
@@ -195,7 +204,7 @@ namespace RetailAppWPF.ViewModels
         {
             get
             {
-                if(subtractPrintQuantityCommand == null)
+                if (subtractPrintQuantityCommand == null)
                 {
                     subtractPrintQuantityCommand = new Helper.RelayCommand(
                         p => this.CanPlusMinus,
@@ -279,14 +288,7 @@ namespace RetailAppWPF.ViewModels
             PrintQuantity = 0;
         }
 
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
-        }
+        
 
     }
 }
