@@ -19,6 +19,25 @@ namespace RetailApp.Data
 
         public SquareCatalogService()
         {
+            Init();
+        }
+
+        public SquareCatalogService(string location, string accessToken, string environment)
+        {
+            Location = location;
+            AccessToken = accessToken;
+            if (environment.Equals("Sandbox", StringComparison.CurrentCulture))
+                BaseURL = "https://connect.squareupsandbox.com";
+            else if (environment.Equals("Production", StringComparison.CurrentCulture))
+                BaseURL = "https://connect.squareup.com";
+            else
+                throw new Exception("Invalid environment: " + environment);
+
+            Init();
+        }
+
+        private void Init()
+        {
             var config = new Square.Connect.Client.Configuration(new ApiClient(basePath: BaseURL));
             config.AccessToken = AccessToken;
             catalogAPI = new CatalogApi(config);
@@ -33,8 +52,15 @@ namespace RetailApp.Data
 
         public List<CatalogObject> CatalogCategories()
         {
-            var response = catalogAPI.ListCatalog(null, CatalogObjectType.CATEGORY.ToString());
-            return response.Objects;
+            try
+            {
+                var response = catalogAPI.ListCatalog(null, CatalogObjectType.CATEGORY.ToString());
+                return response.Objects;
+            } catch(Exception e)
+            {
+                return new List<CatalogObject>();
+            }
+            
         }
 
         public List<SquareProduct> GetCatelogItemsByCategory(string category)
