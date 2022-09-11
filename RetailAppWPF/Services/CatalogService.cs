@@ -35,7 +35,7 @@ namespace RetailAppWPF.Services
         private List<SquareCategory> squareCategories;
         public IEnumerable<string> GetProductCategories()
         {
-            return squareCategories.Select(x => x.CategoryName).Distinct();
+            return squareCategories.OrderBy(y => y.CategoryName).Select(x=>x.CategoryName).Distinct();
         }
 
         /// <summary>
