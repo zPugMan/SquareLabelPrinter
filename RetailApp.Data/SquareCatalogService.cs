@@ -12,7 +12,7 @@ namespace RetailApp.Data
 {
     public class SquareCatalogService : ICatalogService
     {
-        private CatalogApi catalogAPI;
+        private ICatalogApi catalogAPI;
         private readonly string Location = ConfigurationManager.AppSettings.Get("squareLocation");
         private readonly string BaseURL = ConfigurationManager.AppSettings.Get("squareClientUrl");
         private readonly string AccessToken = ConfigurationManager.AppSettings.Get("squareAccessToken");
@@ -20,6 +20,11 @@ namespace RetailApp.Data
         public SquareCatalogService()
         {
             Init();
+        }
+
+        public SquareCatalogService(ICatalogApi api)
+        {
+            catalogAPI = api; 
         }
 
         public SquareCatalogService(string location, string accessToken, string environment)
