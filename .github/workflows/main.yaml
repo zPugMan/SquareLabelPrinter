@@ -8,7 +8,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: action/checkout@v1
+    - uses: action/checkout@v3
       name: Checkout codebase
     - uses: warrenbuckley/Setup-MSBuild@v1
       name: Setup MSBuild
