@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       name: Checkout codebase
-    - uses: warrenbuckley/Setup-MSBuild@v1
+    - uses: microsoft/setup-msuild@v1.1
       name: Setup MSBuild
     - uses: NuGet/setup-nuget@v1.0.2
       name: Setup NuGet
