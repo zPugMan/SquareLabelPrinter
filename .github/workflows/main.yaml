@@ -12,7 +12,7 @@ jobs:
       name: Checkout codebase
     - uses: microsoft/setup-msbuild@v1.1
       name: Setup MSBuild
-    - uses: NuGet/setup-nuget@v1.0.2
+    - uses: NuGet/setup-nuget@v1.0.7
       name: Setup NuGet
 
     - name: Restore Nuget
