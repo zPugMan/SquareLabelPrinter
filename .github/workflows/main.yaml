@@ -1,0 +1,21 @@
+name: Build App
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: action/checkout@v1
+      name: Checkout codebase
+    - uses: warrenbuckley/Setup-MSBuild@v1
+      name: Setup MSBuild
+    - uses: NuGet/setup-nuget@v1.0.2
+      name: Setup NuGet
+
+    - name: Restore Nuget
+      run: nuget restore RetailAppWPF.sln
+    - name: Build
+      run: msbuild RetailAppWPF.sln /p:Configuration=Release
