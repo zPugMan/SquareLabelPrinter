@@ -31,6 +31,9 @@ namespace RetailApp.Data
 
             for(int i=0; i<catalogObject.ItemData.Variations.Count; i++)
             {
+                if(catalogObject.ItemData.Variations[i].ItemVariationData == null)
+                    continue; 
+
                 r = new SquareProduct();
                 r.ItemName = catalogObject.ItemData.Name;
                 r.Price = catalogObject.ItemData.Variations[i].ItemVariationData.PriceMoney.Amount;
