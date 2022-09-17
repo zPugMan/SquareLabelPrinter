@@ -13,7 +13,7 @@ jobs:
         aws_access_key_id: ${{ secrets.S3_ACCESS_KEY }}
         aws_secret_access_key: ${{ secrets.S3_SECRET }}
         source: '${{ secrets.S3_BUCKET }}/8.5.1/DYMO.DLS.Runtime.dll'
-        destination: './dymo-references'
+        destination: './dymo-references/DYMO.DLS.Runtime.dll'
         aws_region: us-west-2
     - name: Cache Libraries
       uses: actions/cache@v3
