@@ -15,7 +15,7 @@ jobs:
       name: Setup NuGet
     - name: Retrieve Private DLLs from S3
       run: |
-        aws s3 cp '${{ secrets.S3_BUCKET }}/8.5.1/DYMO.DLS.Runtime.dll ./dymo-references/DYMO.DLS.Runtime.dll
+        aws s3 cp ${{ secrets.S3_BUCKET }}/8.5.1/DYMO.DLS.Runtime.dll ./dymo-references/DYMO.DLS.Runtime.dll
       env: 
         AWS_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET }}
