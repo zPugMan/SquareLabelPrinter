@@ -18,11 +18,13 @@ jobs:
     - name: Restore Nuget
       run: nuget restore RetailAppWPF.sln
     - name: Retrieve private DLLs
-      uses: prewk/s3-cp-action@v2
+      uses: keithweaver/aws-s3-github-action@v1.0.0
       with:
+        command: cp
         aws_access_key_id: ${{ secrets.S3_ACCESS_KEY }}
         aws_secret_access_key: ${{ secrets.S3_SECRET }}
         source: '${{ secrets.S3_BUCKET }}/8.5.1/DYMO.DLS.Runtime.dll'
-        dest: './dymo-references'
+        destination: './dymo-references'
+        aws_region: us-west-2
     - name: Build
       run: msbuild RetailAppWPF.sln /p:Configuration=Release
