@@ -68,6 +68,7 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <!-- https://stackoverflow.com/a/5075071 for dymo injection fix idea on msbuild -->
   <ItemGroup>
     <Reference Include="DYMO.Common, Version=8.5.1.1816, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
       <HintPath>..\packages\DYMO.Label.8.5.1\lib\net45\DYMO.Common.dll</HintPath>
