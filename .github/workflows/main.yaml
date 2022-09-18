@@ -30,4 +30,4 @@ jobs:
       run: nuget restore RetailAppWPF.sln
     
     - name: Build
-      run: msbuild RetailAppWPF.sln /p:Configuration=Release /p:DymoDllPath=./dymo-references/DYMO.DLS.Runtime.dll
+      run: msbuild RetailAppWPF.sln /p:Configuration=Release /p:DymoDllPath=../dymo-references/DYMO.DLS.Runtime.dll
