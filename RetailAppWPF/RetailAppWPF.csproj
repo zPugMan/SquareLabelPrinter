@@ -68,6 +68,9 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <DymoDllPath Condition="'$(DymoDllPath)'==''">..\..\..\..\..\..\Program Files (x86)\DYMO\DYMO Label Software\DYMO.DLS.Runtime.dll</DymoDllPath>
+  </PropertyGroup>
   <!-- https://stackoverflow.com/a/5075071 for dymo injection fix idea on msbuild -->
   <ItemGroup>
     <Reference Include="DYMO.Common, Version=8.5.1.1816, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
@@ -75,7 +78,7 @@
     </Reference>
     <Reference Include="DYMO.DLS.Runtime, Version=8.5.1.1816, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files (x86)\DYMO\DYMO Label Software\DYMO.DLS.Runtime.dll</HintPath>
+      <HintPath>$(DymoDllPath)</HintPath>
     </Reference>
     <Reference Include="DYMO.Label.Framework, Version=1.0.0.0, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
       <HintPath>..\packages\DYMO.Label.8.5.1\lib\net45\DYMO.Label.Framework.dll</HintPath>
