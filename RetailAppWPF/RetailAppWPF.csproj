@@ -71,6 +71,9 @@
   <PropertyGroup>
     <DymoDllPath Condition="'$(DymoDllPath)'==''">..\..\..\..\..\..\Program Files (x86)\DYMO\DYMO Label Software\DYMO.DLS.Runtime.dll</DymoDllPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <InteropDllPath Condition="'$(InteropDllPath)'==''">..\..\..\..\OneDrive\Documents\Visual Studio 2017\Library References\Interop.Dymo.dll</InteropDllPath>
+  </PropertyGroup>
   <!-- https://stackoverflow.com/a/5075071 for dymo injection fix idea on msbuild -->
   <ItemGroup>
     <Reference Include="DYMO.Common, Version=8.5.1.1816, Culture=neutral, PublicKeyToken=5426002a38745af9, processorArchitecture=MSIL">
@@ -86,14 +89,8 @@
     <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="ExcelDataReader, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelDataReader.3.4.2\lib\net45\ExcelDataReader.dll</HintPath>
-    </Reference>
-    <Reference Include="ExcelDataReader.DataSet, Version=3.4.2.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
-      <HintPath>..\packages\ExcelDataReader.DataSet.3.4.2\lib\net35\ExcelDataReader.DataSet.dll</HintPath>
-    </Reference>
     <Reference Include="Interop.Dymo">
-      <HintPath>..\..\..\..\OneDrive\Documents\Visual Studio 2017\Library References\Interop.Dymo.dll</HintPath>
+      <HintPath>$(InteropDllPath)</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
