@@ -55,11 +55,20 @@ namespace RetailApp.Data
             return response.Objects;
         }
 
+        /// <summary>
+        /// Retrieve Listing of Catalog categories from Square
+        /// </summary>
+        /// <returns></returns>
         public List<CatalogObject> CatalogCategories()
         {
             try
             {
                 var response = catalogAPI.ListCatalog(null, CatalogObjectType.CATEGORY.ToString());
+                if (response.Objects == null)
+                {
+                    return new List<CatalogObject>();
+                }
+
                 return response.Objects;
             } catch(Exception e)
             {
@@ -68,6 +77,11 @@ namespace RetailApp.Data
             
         }
 
+        /// <summary>
+        /// Retrieves Items in Square Catalog for the given Catalog Category, with each variation returned as a separate SquareProduct
+        /// </summary>
+        /// <param name="category">Catalog Category name</param>
+        /// <returns></returns>
         public List<SquareProduct> GetCatelogItemsByCategory(string category)
         {
             SearchCatalogObjectsRequest req = new SearchCatalogObjectsRequest();
@@ -76,32 +90,41 @@ namespace RetailApp.Data
             req.Query = new CatalogQuery();
             req.Query.ExactQuery = new CatalogQueryExact(AttributeName: "name", AttributeValue: category);
 
-            var response = catalogAPI.SearchCatalogObjects(req);
-
             string categoryID = string.Empty;
             List<SquareProduct> result = new List<SquareProduct>();
-            if (response!=null)
+
+            try
             {
-                categoryID = response.Objects[0].Id;
-                req = new SearchCatalogObjectsRequest();
-                req.IncludeRelatedObjects = true;
-                req.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
-                req.Query = new CatalogQuery();
-                req.Query.ExactQuery = new CatalogQueryExact(AttributeName: "category_id", AttributeValue: categoryID);
+                var response = catalogAPI.SearchCatalogObjects(req);
 
-                var catalogItemsResponse = catalogAPI.SearchCatalogObjects(req);
-                if (catalogItemsResponse != null && catalogItemsResponse.Objects.Count>0)
+
+                if (response != null && response.Objects != null)
                 {
-                    
-                    foreach(CatalogObject o in catalogItemsResponse.Objects)
-                    {
-                        result.AddRange(SquareProduct.LoadCatalogObject(o));
-                    }
-                }
-                
-            }
+                    categoryID = response.Objects[0].Id;
+                    req = new SearchCatalogObjectsRequest();
+                    req.IncludeRelatedObjects = true;
+                    req.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
+                    req.Query = new CatalogQuery();
+                    req.Query.ExactQuery = new CatalogQueryExact(AttributeName: "category_id", AttributeValue: categoryID);
 
-            return result;
+                    var catalogItemsResponse = catalogAPI.SearchCatalogObjects(req);
+                    if (catalogItemsResponse != null && catalogItemsResponse.Objects.Count > 0)
+                    {
+
+                        foreach (CatalogObject o in catalogItemsResponse.Objects)
+                        {
+                            result.AddRange(SquareProduct.LoadCatalogObject(o));
+                        }
+                    }
+
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+            
 
         }
 

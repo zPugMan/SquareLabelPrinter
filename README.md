@@ -1,5 +1,7 @@
 # SquareLabelPrinter
 
+![Build Status](https://github.com/zPugMan/SquareLabelPrinter/actions/workflows/main.yaml/badge.svg)
+
 This application integrates with an existing Square account to assist in the management of inventory levels of products sold through Square. Users, upon receiving new inventory, may browse the current Square catalog to find a matching item. Selecting the matching item allows the user to print a barcode label (limited to Dymo label printers at this time) for each physical item. When an item is printed, the user is prompted to update the Square inventory level for the item. 3 labels printed results in 3 items added to Square's inventory.
 
 ![Main Interface](./docs/images/Screenshot.png)
