@@ -15,34 +15,51 @@ namespace RetailApp.Data.Tests
     [TestClass()]
     public class SquareCatalogServiceTests
     {
+
         [TestMethod()]
-        public void SquareCatalogServiceTest()
+        public void SquareCatalogServiceTest_InvalidEnvironment()
         {
-            Assert.Fail();
+            Assert.ThrowsException<Exception>(()=>new SquareCatalogService("invalid location", "123123", "invalid environment"));
         }
 
         [TestMethod()]
-        public void SquareCatalogServiceTest1()
+        public void SquareCatalogServiceTest_SandboxInit()
         {
-            Assert.Fail();
+            SquareCatalogService svc = new SquareCatalogService("test location", "123123", "SandboX");
+
+            Assert.IsNotNull(svc);
         }
 
         [TestMethod()]
-        public void SquareCatalogServiceTest2()
+        public void SquareCatalogServiceTest_ProductionInit()
         {
-            Assert.Fail();
+            SquareCatalogService svc = new SquareCatalogService("test location", "123123", "ProDucTion");
+
+            Assert.IsNotNull(svc);
         }
 
         [TestMethod()]
         public void CatalogCategoriesAsyncTest()
         {
-            Assert.Fail();
+            //arrange
+            List<CatalogObject> mockCatalogItems = TestCatalogObjects();
+
+            var mock = new Mock<ICatalogApi>();
+            mock.Setup(m => m.ListCatalogAsync(It.IsAny<string>(), It.IsAny<string>()))
+                .ReturnsAsync(() => new ListCatalogResponse(null, null, mockCatalogItems));
+
+            SquareCatalogService svc = new SquareCatalogService(mock.Object);
+
+            //act
+            var response = svc.CatalogCategoriesAsync();
+
+            //assert
+            Assert.IsTrue(response.Result != null, $"Expected result, but received null");
+
         }
 
-        [TestMethod()]
-        public void CatalogCategoriesTest_OK()
+        private List<CatalogObject> TestCatalogObjects()
         {
-            //arrange
             List<CatalogObject> mockCatalogItems = new List<CatalogObject>();
             mockCatalogItems.Add(new CatalogObject(
                 Type: CatalogObject.TypeEnum.CATEGORY,
@@ -58,11 +75,26 @@ namespace RetailApp.Data.Tests
                 )
             );
 
+            return mockCatalogItems;
+        }
+
+        private Mock<ICatalogApi> TestListCatalogResults()
+        {
+            List<CatalogObject> mockCatalogItems = TestCatalogObjects();
+
             var mock = new Mock<ICatalogApi>();
             mock.Setup(m => m.ListCatalog(
                     It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(() => new ListCatalogResponse(null, null, mockCatalogItems));
 
+            return mock;
+        }
+
+        [TestMethod()]
+        public void CatalogCategoriesTest_OK()
+        {
+            //arrange
+            var mock = TestListCatalogResults();
             SquareCatalogService svc = new SquareCatalogService(mock.Object);
 
             //act
@@ -190,7 +222,16 @@ namespace RetailApp.Data.Tests
         [TestMethod()]
         public void GetCategoriesTest()
         {
-            Assert.Fail();
+            //arrange 
+            var mock = TestListCatalogResults();
+            SquareCatalogService service = new SquareCatalogService(mock.Object);
+
+            //act
+            var result = service.GetCategories();
+
+            //assert
+            Assert.IsTrue(result.GetType() == typeof(List<SquareCategory>), $"Return type of {result.GetType().Name} does not match expected return type");
+            Assert.IsTrue(result.Count == 2, $"Expected return count of 2, received: {result.Count}");
         }
     }
 }
