@@ -31,9 +31,9 @@ namespace RetailApp.Data
         {
             Location = location;
             AccessToken = accessToken;
-            if (environment.Equals("Sandbox", StringComparison.CurrentCulture))
+            if (environment.Equals("Sandbox", StringComparison.CurrentCultureIgnoreCase))
                 BaseURL = "https://connect.squareupsandbox.com";
-            else if (environment.Equals("Production", StringComparison.CurrentCulture))
+            else if (environment.Equals("Production", StringComparison.CurrentCultureIgnoreCase))
                 BaseURL = "https://connect.squareup.com";
             else
                 throw new Exception("Invalid environment: " + environment);

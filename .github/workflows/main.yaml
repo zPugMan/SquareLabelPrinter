@@ -15,6 +15,9 @@ jobs:
       
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1.0.7
+
+    - name: Setup VSTest
+      uses: darenm/Setup-VSTest@v1
       
     - name: Retrieve Private DLLs from S3
       run: |
@@ -32,3 +35,6 @@ jobs:
     
     - name: Build
       run: msbuild RetailAppWPF.sln /p:Configuration=Release /p:DymoDllPath=../dymo-references/DYMO.DLS.Runtime.dll /p:InteropDllPath=../dymo-references/Interop.Dymo.dll
+
+    - name: Execute Tests
+      run: vstest.console.exe .\tests\RetailApp.Data.Tests\bin\Release\RetailApp.Data.Tests.dll
