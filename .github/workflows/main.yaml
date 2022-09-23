@@ -37,4 +37,4 @@ jobs:
       run: msbuild RetailAppWPF.sln /p:Configuration=Release /p:DymoDllPath=../dymo-references/DYMO.DLS.Runtime.dll /p:InteropDllPath=../dymo-references/Interop.Dymo.dll
 
     - name: Execute Tests
-      run: vstest.console.exe .\tests\RetailApp.Data.Tests\bin\Release\RetailApp.Data.Tests.dll
+      run: vstest.console.exe .\RetailApp.Data.Tests\bin\Release\RetailApp.Data.Tests.dll
