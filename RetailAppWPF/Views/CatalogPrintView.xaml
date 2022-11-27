@@ -24,17 +24,33 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" 
+        <Grid Grid.Column="2" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center"
+                FontFamily="Segoe UI Symbol" Content="&#xE117;" FontSize="18"
+                Margin="0,0,15,0" Background="White" BorderThickness="0" Foreground="Gray"
+                Command="{Binding ForceRefreshCommand}"
+                />
+            <Button Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Center" 
                 FontFamily="Segoe UI Symbol" Content="&#xE115;" FontSize="20"
                 Margin="0,0,15,0" Background="White" BorderThickness="0" Foreground="Gray"
                 Command="{Binding NavigateSettingsCommand}"/>
+        </Grid>
+        
+        
 
         <!-- Available product categories -->
-        <ListView Name="listCategories" HorizontalAlignment="Left" Margin="15,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Stretch" 
+        <ListView Name="listCategories" HorizontalAlignment="Left" Margin="15,5,0,0" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" 
                   ItemsSource="{Binding Categories}"
                   SelectedItem="{Binding SelectedCategory, Mode=TwoWay}"
                   FontSize="24"  Foreground="#FF444343"
                   BorderThickness="0"
+                  
                   >
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
@@ -45,7 +61,7 @@
         </ListView>
 
         <!-- Available products within category -->
-        <ListView Name="listProducts" HorizontalAlignment="Stretch" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Stretch" 
+        <ListView Name="listProducts" HorizontalAlignment="Stretch" Margin="5,5,0,0" Grid.Row="1" Grid.Column="1" VerticalAlignment="Top" MaxHeight="800" 
                   BorderThickness="0"
                 ItemsSource="{Binding Products, Mode=TwoWay}"
                 SelectedItem="{Binding SelectedProduct, Mode=TwoWay}"  

@@ -21,20 +21,25 @@ namespace RetailAppWPF.Services
                 LoadCategories();
         }
 
-        public IEnumerable<ProductItem> GetProducts(string category)
+        public async Task<IEnumerable<ProductItem>> GetProducts(string category)
         {
             RetailApp.Data.SquareCatalogService svc = new RetailApp.Data.SquareCatalogService(
                 location: SettingsStore.Location,
                 accessToken: SettingsStore.AccessToken,
                 environment: SettingsStore.Environment
                 );
-            List<SquareProduct> products = svc.GetCatelogItemsByCategory(category);
+            List<SquareProduct> products = await svc.GetCatalogItemsByCategoryAsync(category);
             return ProductItem.ToList(products).OrderBy( p=>p.Price).OrderBy(p => p.Name);
         }
 
         private List<SquareCategory> squareCategories;
-        public IEnumerable<string> GetProductCategories()
+        public IEnumerable<string> GetProductCategories(bool forceRefresh = false)
         {
+            if (forceRefresh)
+            {
+                squareCategories.Clear();
+                LoadCategories();
+            }
             return squareCategories.OrderBy(y => y.CategoryName).Select(x=>x.CategoryName).Distinct();
         }
 
