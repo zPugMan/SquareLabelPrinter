@@ -159,7 +159,7 @@ namespace RetailApp.Data.Tests
             SquareCatalogService svc = new SquareCatalogService(mock.Object);
 
             //act
-            var result = svc.GetCatelogItemsByCategory(string.Empty);
+            var result = svc.GetCatalogItemsByCategory(string.Empty);
 
             //assert
             Assert.IsTrue(result.GetType() == typeof(List<SquareProduct>), $"Expecting response type of List<{nameof(SquareProduct)}>, received {result.GetType().Name}");
@@ -194,7 +194,7 @@ namespace RetailApp.Data.Tests
             SquareCatalogService svc = new SquareCatalogService(mock.Object);
 
             //act
-            var result = svc.GetCatelogItemsByCategory("Category1");
+            var result = svc.GetCatalogItemsByCategory("Category1");
 
             //assert
             Assert.IsTrue(result.GetType() == typeof(List<SquareProduct>), $"Expecting response type List<${nameof(SquareProduct)}>, received: {result.GetType().Name}");
@@ -212,7 +212,7 @@ namespace RetailApp.Data.Tests
             var svc = new SquareCatalogService(mock.Object);
 
             //act
-            var result = svc.GetCatelogItemsByCategory("Category1");
+            var result = svc.GetCatalogItemsByCategory("Category1");
 
             //assert
             Assert.IsTrue(result.GetType() == typeof(List<SquareProduct>), $"Expecting response type List<${nameof(SquareProduct)}>, received: {result.GetType().Name}");

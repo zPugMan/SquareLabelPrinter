@@ -82,13 +82,9 @@ namespace RetailApp.Data
         /// </summary>
         /// <param name="category">Catalog Category name</param>
         /// <returns></returns>
-        public List<SquareProduct> GetCatelogItemsByCategory(string category)
+        public List<SquareProduct> GetCatalogItemsByCategory(string category)
         {
-            SearchCatalogObjectsRequest req = new SearchCatalogObjectsRequest();
-            req.IncludeRelatedObjects = true;
-            req.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.CATEGORY };
-            req.Query = new CatalogQuery();
-            req.Query.ExactQuery = new CatalogQueryExact(AttributeName: "name", AttributeValue: category);
+            SearchCatalogObjectsRequest req = SearchQuery("name", category, SearchCatalogObjectsRequest.ObjectTypesEnum.CATEGORY);
 
             string categoryID = string.Empty;
             List<SquareProduct> result = new List<SquareProduct>();
@@ -101,11 +97,7 @@ namespace RetailApp.Data
                 if (response != null && response.Objects != null)
                 {
                     categoryID = response.Objects[0].Id;
-                    req = new SearchCatalogObjectsRequest();
-                    req.IncludeRelatedObjects = true;
-                    req.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
-                    req.Query = new CatalogQuery();
-                    req.Query.ExactQuery = new CatalogQueryExact(AttributeName: "category_id", AttributeValue: categoryID);
+                    req = SearchQuery("category_id", categoryID, SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM);
 
                     var catalogItemsResponse = catalogAPI.SearchCatalogObjects(req);
                     if (catalogItemsResponse != null && catalogItemsResponse.Objects.Count > 0)
@@ -124,52 +116,69 @@ namespace RetailApp.Data
             {
                 return result;
             }
-            
-
         }
 
-        //public List<CatalogObject> CatalogItems(String categoryID)
-        //{
-        //    SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
-        //    var response = catalogAPI.SearchCatalogObjects(request);
-        //    return response.Objects;
-        //}
+        public async Task<List<SquareProduct>> GetCatalogItemsByCategoryAsync(string category)
+        {
+            SearchCatalogObjectsRequest req = SearchQuery("name", category, SearchCatalogObjectsRequest.ObjectTypesEnum.CATEGORY);
+            string categoryID = string.Empty;
+            List<SquareProduct> result = new List<SquareProduct>();
 
-        //public async Task<List<CatalogObject>> CatalogItemsAsync(String categoryID)
-        //{
-        //    SearchCatalogObjectsRequest request = GetCatalogByCategory(categoryID);
-        //    var response = await catalogAPI.SearchCatalogObjectsAsync(request);
-        //    return response.Objects;
-        //}
+            try
+            {
+                var response = await catalogAPI.SearchCatalogObjectsAsyncWithHttpInfo(req);
 
-        //private SearchCatalogObjectsRequest GetCatalogByCategory(string categoryID)
-        //{
-        //    SearchCatalogObjectsRequest request = new SearchCatalogObjectsRequest();
-        //    request.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM };
-        //    request.IncludeDeletedObjects = false;
-        //    request.IncludeRelatedObjects = true;
-        //    CatalogQuery searchQuery = new CatalogQuery();
-        //    searchQuery.ExactQuery = new CatalogQueryExact("category_id", categoryID);
-        //    request.Query = searchQuery;
-        //    return request;
-        //}
+                if (response == null)
+                    return result;
 
-        //public async Task<List<SquareCategory>> GetCategoriesAsync()
-        //{
-        //    var response = await CatalogCategoriesAsync();
-        //    List<SquareCategory> result = new List<SquareCategory>();
+                if (response.StatusCode != 200 || response.Data.Objects == null)
+                    return result;
 
-        //    foreach(CatalogObject o in response)
-        //    {
-        //        result.Add(SquareCategory.Load(o));
-        //    }
+                categoryID = response.Data.Objects[0].Id;
+                req = SearchQuery("category_id", categoryID, SearchCatalogObjectsRequest.ObjectTypesEnum.ITEM);
+                var catalogItemsResponse = await catalogAPI.SearchCatalogObjectsAsyncWithHttpInfo(req);
+                if (catalogItemsResponse != null && catalogItemsResponse.Data.Objects != null)
+                {
+                    foreach (CatalogObject o in catalogItemsResponse.Data.Objects)
+                    {
+                        result.AddRange(SquareProduct.LoadCatalogObject(o));
+                    }
+                }
 
-        //    return result;
-        //}
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return result;
+            }
+        }
+
+        private SearchCatalogObjectsRequest SearchQuery(string attribute, string categoryName, SearchCatalogObjectsRequest.ObjectTypesEnum squareObjectType)
+        {
+            SearchCatalogObjectsRequest req = new SearchCatalogObjectsRequest();
+            req.IncludeRelatedObjects = true;
+            req.ObjectTypes = new List<SearchCatalogObjectsRequest.ObjectTypesEnum>() { squareObjectType };
+            req.Query = new CatalogQuery();
+            req.Query.ExactQuery = new CatalogQueryExact(AttributeName: attribute, AttributeValue: categoryName);
+            return req;
+        }
 
         public List<SquareCategory> GetCategories()
         {
             var response = CatalogCategories();
+            List<SquareCategory> result = new List<SquareCategory>();
+
+            foreach (CatalogObject o in response)
+            {
+                result.Add(SquareCategory.Load(o));
+            }
+
+            return result;
+        }
+
+        public async Task<List<SquareCategory>> GetCategoriesAsync()
+        {
+            var response = await CatalogCategoriesAsync();
             List<SquareCategory> result = new List<SquareCategory>();
 
             foreach (CatalogObject o in response)

@@ -29,9 +29,31 @@ namespace RetailAppWPF.ViewModels
             Categories = catalog.GetProductCategories();
             updateInventory = false;
             NavigateSettingsCommand = new NavigateCommand<SettingsViewModel>(navStore, ()=> new SettingsViewModel(navStore, notify));
+
+            PropertyChanged += async (s,e) => await AsyncPropertyChanged(s,e);
         }
 
         public ICommand NavigateSettingsCommand { get; }
+        public Helper.RelayCommand forceRefreshCommand;
+        public ICommand ForceRefreshCommand
+        {
+            get
+            {
+                forceRefreshCommand = new Helper.RelayCommand(
+                    p => true,
+                    p => this.ForceRefresh()
+                    );
+                return forceRefreshCommand;
+            }
+        }
+
+        public void ForceRefresh()
+        {
+            SelectedCategory = null;
+            Products = null;
+            Categories = catalog.GetProductCategories(forceRefresh: true);
+            NotifyToast.ShowInformation("Forced refresh from Square");
+        }
 
         private IEnumerable<String> categories;
         /// <summary>
@@ -64,8 +86,18 @@ namespace RetailAppWPF.ViewModels
             {
                 selectedCategory = value;
                 OnPropertyChanged("SelectedCategory");
-                Products = catalog.GetProducts(selectedCategory);
+                
             }
+        }
+
+        private async Task AsyncPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(SelectedCategory))
+            {
+                if(selectedCategory != null)
+                    Products = await catalog.GetProducts(selectedCategory);
+            }
+                
         }
 
         private IEnumerable<ProductItem> products;

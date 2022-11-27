@@ -22,5 +22,6 @@ namespace RetailAppWPF.ViewModels
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
     }
 }

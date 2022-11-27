@@ -10,8 +10,12 @@ namespace RetailApp.Data
     public interface ICatalogService
     {
         Task<List<CatalogObject>> CatalogCategoriesAsync();
+        List<CatalogObject> CatalogCategories();
 
-        //List<CatalogItem> CatalogItems(String categoryID);
+        List<SquareProduct> GetCatalogItemsByCategory(string category);
+        Task<List<SquareProduct>> GetCatalogItemsByCategoryAsync(string category);
+        List<SquareCategory> GetCategories();
+        Task<List<SquareCategory>> GetCategoriesAsync();
 
     }
 }
