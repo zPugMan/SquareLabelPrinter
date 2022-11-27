@@ -9,6 +9,13 @@ jobs:
     steps:
     - name: Checkout codebase
       uses: actions/checkout@v3
+
+    - name: Github Cache
+      id: cache-dymo
+      uses: actions/cache@v3
+      with: 
+        path: dymo-references
+        key: ${{ runner.os }}-dymo
       
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1.1
@@ -20,6 +27,7 @@ jobs:
       uses: darenm/Setup-VSTest@v1
       
     - name: Retrieve Private DLLs from S3
+      if: steps.cache-dymo.outputs.cache-hit != 'true'
       run: |
         aws s3 cp ${{ secrets.S3_BUCKET }}/8.5.1/DYMO.DLS.Runtime.dll ./dymo-references/DYMO.DLS.Runtime.dll
         aws s3 cp ${{ secrets.S3_BUCKET }}/8.5.1/Interop.Dymo.dll ./dymo-references/Interop.Dymo.dll
