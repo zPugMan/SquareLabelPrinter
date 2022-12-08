@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using ToastNotifications;
 using ToastNotifications.Messages;
+using Microsoft.Extensions.Logging;
 
 namespace RetailAppWPF.ViewModels
 {
@@ -21,14 +22,18 @@ namespace RetailAppWPF.ViewModels
     public class CatalogPrintViewModel : ViewModelBase
     {
         private static CatalogService catalog;
-        
-        public CatalogPrintViewModel(NavigationStore navStore, Notifier notify)
+        private readonly ILogger _log;
+        private readonly ILoggerFactory _loggerFactory;
+
+        public CatalogPrintViewModel(ILoggerFactory loggerFactory, NavigationStore navStore, Notifier notify)
         {
+            _log = loggerFactory.CreateLogger<CatalogPrintViewModel>();
+            _loggerFactory = loggerFactory; ;
             NotifyToast = notify;
             catalog = new CatalogService();
             Categories = catalog.GetProductCategories();
             updateInventory = false;
-            NavigateSettingsCommand = new NavigateCommand<SettingsViewModel>(navStore, ()=> new SettingsViewModel(navStore, notify));
+            NavigateSettingsCommand = new NavigateCommand<SettingsViewModel>(navStore, ()=> new SettingsViewModel(loggerFactory, navStore, notify));
 
             PropertyChanged += async (s,e) => await AsyncPropertyChanged(s,e);
         }
@@ -203,7 +208,7 @@ namespace RetailAppWPF.ViewModels
                 return;
             }
 
-            using (PrintServices print = new PrintServices())
+            using (PrintServices print = new PrintServices(_loggerFactory))
             {
                 UpdateInventoryCheck = true;
                 print.PrintBarcodeLabel2(SelectedProduct, PrintQuantity);

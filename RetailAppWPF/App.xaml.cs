@@ -5,11 +5,14 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using RetailAppWPF.Stores;
 using RetailAppWPF.ViewModels;
 using ToastNotifications;
 using ToastNotifications.Lifetime;
 using ToastNotifications.Position;
+using Serilog;
 
 namespace RetailAppWPF
 {
@@ -18,6 +21,30 @@ namespace RetailAppWPF
     /// </summary>
     public partial class App : Application
     {
+        private IServiceProvider serviceProvider;
+
+        public App()
+        {
+            ServiceCollection services = new ServiceCollection();
+            ConfigureServices(services);
+            serviceProvider = services.BuildServiceProvider();
+        }
+
+        private void ConfigureServices(ServiceCollection services)
+        {
+            
+            ILoggerFactory logFactory = LoggerFactory.Create(build =>
+            {
+                build.AddDebug();
+
+                LoggerConfiguration logConfig = new LoggerConfiguration()
+                    .WriteTo.File("action.log");
+                build.AddSerilog(logConfig.CreateLogger());
+            });
+            services.AddSingleton(logFactory);
+            services.AddSingleton<MainWindow>();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             NavigationStore navigationStore = new NavigationStore();
@@ -39,16 +66,24 @@ namespace RetailAppWPF
 
             });
 
+            var logFactory = serviceProvider.GetService<ILoggerFactory>();
             if (string.IsNullOrEmpty(RetailAppWPF.Properties.Settings.Default.AccessToken))
-                navigationStore.CurrentViewModel = new SettingsViewModel(navigationStore, notify);
-            else
-                navigationStore.CurrentViewModel = new CatalogPrintViewModel(navigationStore, notify);
-
-            MainWindow = new MainWindow()
             {
-                DataContext = new MainViewModel(navigationStore, notify)
-            };
-            MainWindow.Show();
+                navigationStore.CurrentViewModel = new SettingsViewModel(logFactory, navigationStore, notify);
+            }
+            else
+            {
+                navigationStore.CurrentViewModel = new CatalogPrintViewModel(logFactory, navigationStore, notify);
+            }
+
+            //MainWindow = new MainWindow()
+            //{
+            //    DataContext = new MainViewModel(navigationStore, notify)
+            //};
+            //MainWindow.Show();
+            var main = serviceProvider.GetService<MainWindow>();
+            main.DataContext = new MainViewModel(navigationStore, notify);
+            main.Show();
 
             base.OnStartup(e);
         }

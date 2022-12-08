@@ -18,7 +18,7 @@ using System.Collections.ObjectModel;
 using System.Reactive.Linq;
 using System.ComponentModel;
 using RetailAppWPF.ViewModels;
-
+using Microsoft.Extensions.Logging;
 
 namespace RetailAppWPF
 {
@@ -27,13 +27,19 @@ namespace RetailAppWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        public MainWindow()
+        private readonly ILogger _log;
+        public MainWindow(ILoggerFactory loggerFactory)
         {
+            _log = loggerFactory.CreateLogger<MainWindow>();
+            _log.LogInformation($"Application starting in: {Environment.CurrentDirectory}");
             InitializeComponent();
-                
         }
 
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+            _log.LogInformation("RetailAppWPF started");
+        }
 
     }
 }
