@@ -9,17 +9,20 @@ using ToastNotifications;
 using ToastNotifications.Messages;
 using RetailAppWPF.Commands;
 using System.Collections.ObjectModel;
+using Microsoft.Extensions.Logging;
 
 namespace RetailAppWPF.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
         private NavigationStore navigationStore;
-        public SettingsViewModel(NavigationStore navStore, Notifier notify)
+        private readonly ILoggerFactory _loggerFactory;
+        public SettingsViewModel(ILoggerFactory loggerFactory,NavigationStore navStore, Notifier notify)
         {
+            _loggerFactory = loggerFactory; 
             NotifyToast = notify;
             navigationStore = navStore;
-            SettingCancelCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(navStore, notify));
+            SettingCancelCommand = new NavigateCommand<CatalogPrintViewModel>(navStore, () => new CatalogPrintViewModel(loggerFactory, navStore, notify));
 
             SelectedEnvironment = SettingsStore.Environment;
             AccessToken = SettingsStore.AccessToken;
@@ -82,7 +85,7 @@ namespace RetailAppWPF.ViewModels
             {
                 Properties.Settings.Default.Save();
                 NotifyToast.ShowInformation("Settings saved");
-                navigationStore.CurrentViewModel = new CatalogPrintViewModel(navigationStore, NotifyToast);
+                navigationStore.CurrentViewModel = new CatalogPrintViewModel(_loggerFactory,navigationStore, NotifyToast);
             } catch(Exception e)
             {
                 NotifyToast.ShowError("Error on save: " + e.Message);

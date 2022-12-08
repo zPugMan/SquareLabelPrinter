@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 //using DYMO.DLS.Runtime;
 using DYMO.Label.Framework;
 using RetailAppWPF.Models;
+using Microsoft.Extensions.Logging;
 
 namespace RetailAppWPF.Services
 {
@@ -15,27 +16,17 @@ namespace RetailAppWPF.Services
     {
         private static string BARCODE_TXT = "{BARCODE}";
         private Dymo.DymoAddIn dymo;
+        private readonly ILogger _log;
 
-        //old method
-        public void PrintBarcodeLabel(ProductItem item, int quantity)
+        public PrintServices(ILoggerFactory loggerFactory)
         {
-            var labelXmlFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\jbrooker.label");
-            string xmlTemplate = File.ReadAllText(labelXmlFilePath, Encoding.UTF8);
-            string xmlData = xmlTemplate.Replace(BARCODE_TXT, item.SKU);
-            File.WriteAllText(@"c:\temp\test.xml", xmlData);
-            string cachePath = Path.Combine(Environment.CurrentDirectory, @"Cache\");
-
-            dymo = new Dymo.DymoAddIn();
-            dymo.StartPrintJob();
-            dymo.Open(@"c:\temp\test.xml");
-            dymo.Print(quantity, false);
-            dymo.EndPrintJob();
-
+            _log = loggerFactory.CreateLogger<PrintServices>();
         }
 
         public void PrintBarcodeLabel2(ProductItem item, int quantity)
         {
             IFontInfo font = new FontInfo("Arial", 8d, FontStyle.None);
+            _log.LogInformation($"Request to print '{item.Name}' (SKU: {item.SKU}); quantity: {quantity}");
 
             BarcodeObject barcode = new BarcodeObject();
             barcode.BarcodeSize = BarcodeSize.Small;
@@ -49,7 +40,22 @@ namespace RetailAppWPF.Services
             BarcodeError barError = barcode.Validate();
 
             var labelXmlFilePath = Path.Combine(Environment.CurrentDirectory, @"Assets\jbrooker-portrait-1.label");
-            string xmlTemplate = File.ReadAllText(labelXmlFilePath, Encoding.UTF8);
+            string xmlTemplate = String.Empty;
+            try
+            {
+                xmlTemplate = File.ReadAllText(labelXmlFilePath, Encoding.UTF8);
+            }
+            catch (FileNotFoundException e)
+            {
+                _log.LogError($"Failed to load Dymo template: {labelXmlFilePath}", e);
+                return;
+            }
+            catch (Exception e)
+            {
+                _log.LogError($"Exception caught in loading Dymo template: {labelXmlFilePath}", e);
+                return;
+            }
+
             ILabel label = Label.OpenXml(xmlTemplate);
             label.SetObjectText("BARCODE", item.SKU);
             label.SetObjectText("TEXT", item.Name);
@@ -71,8 +77,6 @@ namespace RetailAppWPF.Services
                 job.AddLabel(label);
                 job.Print();
 
-                //label.Print(printer, parms);
-                //label.SaveToFile(@"c:\temp\test.xml");
             }
             
         }
